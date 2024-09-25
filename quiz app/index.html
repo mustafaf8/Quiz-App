@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    .radio-group {
+        margin: 10px 0;
+        padding: 5px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: 60%;
+    }
+
+    .radio-group input[type="radio"] {
+        display: none;
+    }
+
+    .radio-group label {
+        padding: 5px;
+        margin-right: 0px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+    input, label {
+        margin: 10px; 
+    }
+
+    /* Seçili radyo butonunun stili */
+    .radio-group input[type="radio"]:checked + label {
+        background-color: #4CAF50; /* Seçilen radyo butonunun arka plan rengi */
+        color: white;
+        border-color: #4CAF50;
+    }
+
+    .container {
+        width: 55%;
+        height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .questionss {
+        display: flex;
+        overflow-x: auto; /* Yana kaydırma özelliği */
+        scroll-behavior: smooth; 
+        width: 50%;
+        height: 60%;
+        margin: 0 auto; /* Ortalamak için */
+        border: 2px solid #ddd; 
+        border-radius: 10px; 
+    }
+
+    .questions {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        margin: 10px; 
+        flex-shrink: 0; 
+        text-align: center;
+        padding: 10px;
+    }
+    h2 {
+        margin-top: 30px;
+        font-size: small;
+    }
+    @media (max-width:800px) {
+        .container {
+            width: 80%;
+        }
+        .questionss {
+            width: 90%;
+        }
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="questionss">
+            <div class="questions">
+                <h2>Lorem ipsum dolor ?</h2>
+                <div class="radio-group">
+                    <input type="radio" id="option1-1" name="options1" value="1">
+                    <label for="option1-1">x</label>
+                    <input type="radio" id="option2-1" name="options1" value="2">
+                    <label for="option2-1">y</label>
+                    <input type="radio" id="option3-1" name="options1" value="3">
+                    <label for="option3-1">z</label>
+                    <input type="radio" id="option4-1" name="options1" value="4">
+                    <label for="option4-1">w</label>
+                </div>
+            </div>
+            <div class="questions">
+                <h2>Lorem ipsum dolor ?</h2>
+                <div class="radio-group">
+                    <input type="radio" id="option1-2" name="options2" value="1">
+                    <label for="option1-2">x</label>
+                    <input type="radio" id="option2-2" name="options2" value="2">
+                    <label for="option2-2">y</label>
+                    <input type="radio" id="option3-2" name="options2" value="3">
+                    <label for="option3-2">z</label>
+                    <input type="radio" id="option4-2" name="options2" value="4">
+                    <label for="option4-2">w</label>
+                </div>
+            </div>
+            <div class="questions">
+                <h2>Lorem ipsum dolor ?</h2>
+                <div class="radio-group">
+                    <input type="radio" id="option1-3" name="options3" value="1">
+                    <label for="option1-3">x</label>
+                    <input type="radio" id="option2-3" name="options3" value="2">
+                    <label for="option2-3">y</label>
+                    <input type="radio" id="option3-3" name="options3" value="3">
+                    <label for="option3-3">z</label>
+                    <input type="radio" id="option4-3" name="options3" value="4">
+                    <label for="option4-3">w</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            options1: 1, // Dogru cevap: x
+            options2: 2, // Dogru cevap: y
+            options3: 4  // Dogru cevap: w
+        };
+
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const selectedName = e.target.name;
+                const selectedValue = e.target.value;
+
+                // Dogru cevab kontrol 
+                const correctAnswer = correctAnswers[selectedName];
+                const labels = document.querySelectorAll(`input[name="${selectedName}"] + label`);
+
+                // Tüm etiketleri sıfırlaa
+                labels.forEach(label => {
+                    label.style.backgroundColor = '';
+                });
+
+                // Seçenekleri kontrol et
+                if (selectedValue == correctAnswer) {
+                    e.target.nextElementSibling.style.backgroundColor = 'green'; 
+                } else {
+                    e.target.nextElementSibling.style.backgroundColor = 'red'; 
+                    // Dogru cevabı yesil yap
+                    labels.forEach(label => {
+                        if (label.getAttribute('for') === `option${correctAnswer}-${selectedName.charAt(selectedName.length - 1)}`) {
+                            label.style.backgroundColor = 'green'; 
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
